@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<p id = "name"  ></p>>
+<img src="https://a7y5v5k5.stackpathcdn.com/wp-content/uploads/2019/09/league_of_legends___icon_2_by_blagoicons_d9yevyr-1.png" alt=""
+style="width: 300px;"
+> 
+
+
+<!-- <input type="text"> -->
+
+
+<select name="dero" id="champOptions">
+
+</select>
+
+
+<pre id="lolchamp"></pre>
+
+
+
+<script>
+//const name = prompt("Username:")
+// const name = prompt("Username:")
+
+ document.getElementById("name").innerHTML = name;
+     if (name == "Janus"){
+        console.log("silverscrub")  
+
+ }
+
+
+ var derp = document.getElementById("lolchamp");
+
+
+ let champData;
+ var sel = document.getElementById('champOptions');
+
+
+ sel.addEventListener('change', (e) => {
+
+
+    let selectedChamp = sel.options[sel.selectedIndex].value;
+
+
+    derp.innerHTML = 
+    JSON.stringify(champData.data[selectedChamp].info)
+    
+    
+    
+
+ })
+
+
+
+fetch (
+`http://ddragon.leagueoflegends.com/cdn/10.20.1/data/en_US/champion.json`
+)  .then(response => response.json())
+  .then(stuff => { 
+    champData = stuff;
+
+    for(const lol of Object.keys(stuff.data))  {
+
+            // create new option element
+            var opt = document.createElement('option');
+
+            // create text node to add to option element (opt)
+            opt.appendChild( document.createTextNode(stuff.data[lol].name) );
+
+            // set value property of opt
+            opt.value = lol; 
+
+            // add opt to end of select box (sel)
+            sel.appendChild(opt); 
+    }
+
+  } );
+
+
+
+
+</script>
+<style>
+#name {
+    color: rgb(0, 0, 0);
+    font-size: 50px ;
+}   
+body{
+    background-color: slategrey
+}
+
+
+    
+</style>

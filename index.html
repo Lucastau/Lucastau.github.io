@@ -1,102 +1,166 @@
 <!DOCTYPE html>
 
 <html>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 
-    
-    <p id = "name"  ></p>>
-    <img src="https://a7y5v5k5.stackpathcdn.com/wp-content/uploads/2019/09/league_of_legends___icon_2_by_blagoicons_d9yevyr-1.png" alt=""
-    style="width: 300px;"
-    > 
-    
-    <h2>Hej github</h2>
-    
-    
-    <!-- <input type="text"> -->
-    
-    
-    <select name="dero" id="champOptions">
-        
-    </select>
-    
-    
-    <pre id="lolchamp"></pre>
-    
-    
-    
-    <script>
-        //const name = prompt("Username:")
-        // const name = prompt("Username:")
-        
-        document.getElementById("name").innerHTML = name;
-        if (name == "Janus"){
-            console.log("silverscrub")  
-            
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<head>
+    <style>
+    h1 {
+        font-family: verdana;
+        font-size: 200% ;
+        display: flex;
+        justify-content: center;
+    }
+</style> 
+</head>       
+<body>
+    <h1 class="blackoutline">
+       League of Legends 
+    </h1>
+    <h2 class="blackoutline"> Damage, Defend and Skill level. </h2>
+    <style>
+        h2 {
+        font-family: verdana;
+        font-size: 150% ;
+        display: flex;
+        justify-content: center;
         }
-        
-        
-        var derp = document.getElementById("lolchamp");
+    </style>
+</body>
 
-        
-        let champData;
-        var sel = document.getElementById('champOptions');
-        
-        
-        sel.addEventListener('change', (e) => {
-            
-            
-            let selectedChamp = sel.options[sel.selectedIndex].value;
-            
-            
-            derp.innerHTML = 
-            JSON.stringify(champData.data[selectedChamp].info)
-            
-            
-            
-            
-        })
-        
-        
-        
-        fetch (
-            `http://ddragon.leagueoflegends.com/cdn/10.20.1/data/en_US/champion.json`
-            )  .then(response => response.json())
-            .then(stuff => { 
-                champData = stuff;
+
+
+
+    
+</Style>
+
+
+<body>
+
+    <div class="header">
+
+
+        <img src="https://a7y5v5k5.stackpathcdn.com/wp-content/uploads/2019/09/league_of_legends___icon_2_by_blagoicons_d9yevyr-1.png"
+            alt=""  width= "300px;" height="300px">
+
+        </div>
+        <div class="header">
+
+            <select class="js-example-basic-single" name="state" id="champOptions"></select>
+        </div>
+
+
+
+
+    <pre class="blackoutline" id="Patch"></pre>
+    <style>
+        #Patch {
+            display: flex;
+        justify-content: center;
+        width: 100%;
+        }
+    </style>
+
+     <pre class="blackoutline" id="Stats"></pre>
+     <style>
+         #Stats{
+            display: flex;
+        justify-content: center;
+        width: 100%;
+         }
+     </style>
+
+     <pre class="blackoutline" id="Class"></pre>
+    <style>
+    #Class{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    </style>
+     
+
+
+<script>
+    var sel = document.getElementById('champOptions');
+    let champData;
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+
+
+        $('.js-example-basic-single').on('change', function (e) {
+
+            let selectedChamp = champData.data[sel.options[sel.selectedIndex].value]
+
+            console.log(selectedChamp.version);
+            console.log(selectedChamp.info);
+
+            document.getElementById("Patch").innerHTML = JSON.stringify(selectedChamp.version)
+            document.getElementById("Stats").innerHTML = JSON.stringify(selectedChamp.info)
+            document.getElementById("Class").innerHTML = JSON.stringify(selectedChamp.tags)
+        });
+    });
+    fetch(
+        `http://ddragon.leagueoflegends.com/cdn/10.20.1/data/en_US/champion.json`
+    ).then(response => response.json())
+        .then(stuff => {
+            champData = stuff;
+
+            for (const lol of Object.keys(stuff.data)) {
+
+                // create new option element
+                var opt = document.createElement('option');
+                // create text node to add to option element (opt)
+                opt.appendChild(document.createTextNode(stuff.data[lol].name));
+
+                // set value property of opt
+                opt.value = lol;
+
+                // add opt to end of select box (sel)
+                sel.appendChild(opt);
                 
-                for(const lol of Object.keys(stuff.data))  {
-                    
-                    // create new option element
-                    var opt = document.createElement('option');
-                    
-                    // create text node to add to option element (opt)
-                    opt.appendChild( document.createTextNode(stuff.data[lol].name) );
-                    
-                    // set value property of opt
-                    opt.value = lol; 
-                    
-                    // add opt to end of select box (sel)
-                    sel.appendChild(opt); 
-                }
-                
-            } );
+            }
+
+        });
+
+</script>
+  
 
 
-            
-            
-            
-            
-            
-        </script>
-<style>
-#name {
-    color: rgb(0, 0, 0);
-    font-size: 50px ;
-}   
-body{
-    background-color: slategrey
+<style> 
+    body{
+        background-image: url( "https://cdnb.artstation.com/p/assets/images/images/018/996/015/large/oliver-chipping-sru.jpg?1561561492" );
+    
+    }    
+
+
+
+     .js-example-basic-single {
+        width: 100px
+       
+
 }
 
-
+.blackoutline{
+    color: #fff;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+    .header {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
     
-</style>
-    </html>
+</style>    
+
+
+</html>
+
+
+
+
